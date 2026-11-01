@@ -4,3 +4,6 @@ compatibility_date = "2025-01-01"
 
 [vars]
 VITE_API_BASE = "https://first-impression-radar-api.standing-bike.workers.dev"
+
+# 请在 Cloudflare Workers 环境变量中设置 STEPFUN_API_KEY
+# 访问 https://dash.cloudflare.com -> Workers & Pages -> 选择 first-impression-radar-api -> Settings -> Variables
