@@ -3,4 +3,4 @@ main = "../backend/src/index.js"
 compatibility_date = "2025-01-01"
 
 [vars]
-VITE_API_BASE = "https://first-impression-radar-api.chagall.workers.dev"
+VITE_API_BASE = "https://first-impression-radar-api.standing-bike.workers.dev"
