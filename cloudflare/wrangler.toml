@@ -1,5 +1,5 @@
 name = "first-impression-radar-api"
-main = "src/index.js"
+main = "../backend/src/index.js"
 compatibility_date = "2025-01-01"
 
 [vars]
