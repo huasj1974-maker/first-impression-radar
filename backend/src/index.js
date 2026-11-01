@@ -22,23 +22,22 @@ const ANALYSIS_PROMPT = `你是一位专业的社交印象分析师。请根据�
     {"label": "穿搭风格", "value": 分数},
     {"label": "妆容建议", "value": 分数}
   ],
-  "tags": ["3-5个印象标签，如"甜妹感""氛围感美女""高级感""少年感"等"],
+  "tags": ["3-5个印象标签"],
   "suggestions": [
-    "具体可操作的美学建议1（10-30字）",
-    "具体可操作的美学建议2（10-30字）",
-    "具体可操作的美学建议3（10-30字）"
+    "具体可操作的美学建议1",
+    "具体可操作的美学建议2",
+    "具体可操作的美学建议3"
   ]
 }
 
 重要：
-- 评分要客观但偏正向（毕竟是娱乐类产品）
-- 描述要具体、有画面感，不要泛泛而谈
+- 评分要客观但偏正向
+- 描述要具体、有画面感
 - tags 要符合中文互联网审美语境
-- 所有文字用中文输出`
+- 所有文字用中文输出`;
 
 export default {
   async fetch(request, env) {
-    // CORS headers
     const corsHeaders = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
@@ -49,14 +48,12 @@ export default {
       return new Response(null, { headers: corsHeaders })
     }
 
-    // Health check
     if (request.url.includes('/api/health')) {
       return new Response(JSON.stringify({ status: 'ok', timestamp: Date.now() }), {
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
       })
     }
 
-    // Main analyze endpoint
     if (request.method === 'POST' && request.url.includes('/api/analyze')) {
       try {
         const formData = await request.formData()
@@ -69,13 +66,11 @@ export default {
           })
         }
 
-        // Convert image to base64
         const bytes = await imageFile.arrayBuffer()
         const base64 = Buffer.from(bytes).toString('base64')
         const mime = imageFile.type || 'image/jpeg'
         const dataUrl = `data:${mime};base64,${base64}`
 
-        // Call StepFun Step-1v-flash API
         const apiKey = env.STEPFUN_API_KEY
         if (!apiKey) {
           return new Response(JSON.stringify({ error: '服务器未配置 API Key' }), {
@@ -87,7 +82,7 @@ export default {
         const response = await fetch('https://api.stepfun.com/v1/chat/completions', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${apiKey}}`,
+            'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
@@ -131,10 +126,8 @@ export default {
           })
         }
 
-        // Parse JSON from response (handle markdown code block wrappers)
         let parsed
         try {
-          // Remove markdown code fences if present
           let cleaned = rawContent.trim()
           if (cleaned.startsWith('```')) {
             const firstLineEnd = cleaned.indexOf('\n')
@@ -152,7 +145,6 @@ export default {
           })
         }
 
-        // Ensure radarData has 6 dimensions
         if (!parsed.radarData || parsed.radarData.length < 6) {
           return new Response(JSON.stringify({ error: 'AI 分析结果不完整' }), {
             status: 502,
