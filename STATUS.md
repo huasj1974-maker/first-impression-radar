@@ -9,7 +9,7 @@
 
 ### ⚠️ 后端 - Cloudflare Workers (临时账户)
 - **URL**: https://first-impression-radar-api.standing-bike.workers.dev
-- **状态**: 已部署，但需要配置 API Key
+- **状态**: 已部署，需要配置 API Key
 - **注意**: 使用临时账户，需要正式登录后迁移
 
 ### ⏳ 待完成
