@@ -76,7 +76,7 @@ export default {
         const dataUrl = `data:${mime};base64,${base64}`
 
         // Call StepFun Step-1v-flash API
-        const apiKey = ***
+        const apiKey = env.STEPFUN_API_KEY
         if (!apiKey) {
           return new Response(JSON.stringify({ error: '服务器未配置 API Key' }), {
             status: 500,
@@ -87,7 +87,7 @@ export default {
         const response = await fetch('https://api.stepfun.com/v1/chat/completions', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ***}`,
+            'Authorization': `Bearer ${apiKey}}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
